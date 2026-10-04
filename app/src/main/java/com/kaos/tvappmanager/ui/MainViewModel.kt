@@ -93,6 +93,7 @@ class MainViewModel(private val container: AppContainer) : ViewModel() {
     init {
         container.installQueue.onInstalled = { refreshInstalled() }
         viewModelScope.launch {
+            container.sourceStore.ensureDefaultSource()
             container.refreshSettings()
             val snapshot = container.sourceStore.snapshot()
             val granted = container.installPermission.has()

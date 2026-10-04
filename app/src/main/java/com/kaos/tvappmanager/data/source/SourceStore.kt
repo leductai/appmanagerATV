@@ -78,6 +78,22 @@ class SourceStore(private val dataStore: DataStore<Preferences>) {
         )
     }
 
+    /**
+     * Dam bao luon co it nhat mot nguon: chi them nguon mac dinh khi danh sach dang
+     * trong, de lan mo dau tien co san danh sach app. Khong bao gio ghi de nguon
+     * nguoi dung da them.
+     */
+    suspend fun ensureDefaultSource() {
+        dataStore.edit { prefs ->
+            if (prefs.readSources().isNotEmpty()) return@edit
+            val id = UUID.randomUUID().toString()
+            prefs[KEY_SOURCES] = encode(
+                listOf(ManifestSource(id = id, name = DEFAULT_SOURCE_NAME, location = DEFAULT_SOURCE_URL))
+            )
+            prefs[KEY_ACTIVE_SOURCE] = id
+        }
+    }
+
     /** Them nguon. Tra ve id cua nguon da them. */
     suspend fun addSource(name: String, location: String): String {
         val id = UUID.randomUUID().toString()
@@ -160,6 +176,11 @@ class SourceStore(private val dataStore: DataStore<Preferences>) {
     }
 
     companion object {
+        /** Nguon manifest mac dinh duoc them ngay khi cai app lan dau. */
+        const val DEFAULT_SOURCE_URL =
+            "https://raw.githubusercontent.com/leductai/appmanagerATV/refs/heads/main/app.json"
+        const val DEFAULT_SOURCE_NAME = "Default"
+
         private val KEY_SOURCES = stringPreferencesKey("sources")
         private val KEY_ACTIVE_SOURCE = stringPreferencesKey("active_source")
         private val KEY_WIFI_ONLY = booleanPreferencesKey("wifi_only")

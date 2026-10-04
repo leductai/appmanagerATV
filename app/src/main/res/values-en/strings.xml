@@ -74,7 +74,7 @@
     <string name="permission_already_granted">Install permission is already granted.</string>
 
     <string name="manifest_none_title">No manifest source yet</string>
-    <string name="manifest_none_body">Press the number keys 8-8-0-0 within 4 seconds on the main screen to open the hidden settings menu and add a manifest source.</string>
+    <string name="manifest_none_body">No manifest source has been added yet.</string>
     <string name="manifest_loading">Reading manifest…</string>
     <string name="manifest_cached">Could not refresh the manifest, showing the cached copy.</string>
     <string name="manifest_empty">The manifest contains no apps.</string>

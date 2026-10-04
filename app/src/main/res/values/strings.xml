@@ -82,7 +82,7 @@
 
     <!-- Manifest / source -->
     <string name="manifest_none_title">Chưa có nguồn manifest</string>
-    <string name="manifest_none_body">Nhấn giữ phím số 8-8-0-0 trong vòng 4 giây tại màn hình chính để mở menu cài đặt ẩn và thêm nguồn manifest.</string>
+    <string name="manifest_none_body">Chưa có nguồn manifest nào.</string>
     <string name="manifest_loading">Đang đọc manifest…</string>
     <string name="manifest_cached">Không tải được manifest, đang hiển thị bản lưu.</string>
     <string name="manifest_empty">Manifest không có ứng dụng nào.</string>
