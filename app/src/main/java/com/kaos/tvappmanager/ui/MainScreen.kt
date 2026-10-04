@@ -2,6 +2,9 @@ package com.kaos.tvappmanager.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -24,9 +28,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
@@ -38,8 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
-import androidx.tv.material3.Tab
-import androidx.tv.material3.TabRow
 import com.kaos.tvappmanager.R
 import com.kaos.tvappmanager.data.apps.AppCatalog
 import com.kaos.tvappmanager.data.apps.AppEntry
@@ -118,24 +122,10 @@ fun MainScreen(
                     }
 
                     Key.DirectionDown -> when (focusState.focusedAction) {
-                        MainFocusState.ACTION_UPDATE_ALL -> {
-                            val target = rows.firstOrNull { it.rowIndex == firstCardRowIndex }?.cards?.firstOrNull()
-                            if (target != null) {
-                                focusState.requesterFor(target.packageName)?.requestFocus()
-                            } else {
-                                focusState.updateAllRequester.requestFocus()
-                            }
-                            true
-                        }
-
+                        MainFocusState.ACTION_UPDATE_ALL,
                         MainFocusState.ACTION_INSTALL_ALL -> {
-                            val notInstalled = state.groups.notInstalled.firstOrNull()
-                            if (notInstalled != null) {
-                                focusState.requesterFor(notInstalled.packageName)?.requestFocus()
-                                    ?: firstNotInstalledRequester.requestFocus()
-                            } else {
-                                focusState.installAllRequester.requestFocus()
-                            }
+                            // Di qua vung tab truoc; tu tab nhan Down moi xuong danh sach app.
+                            focusState.tabRequester(state.tab.ordinal)?.requestFocus()
                             true
                         }
 
@@ -164,7 +154,7 @@ fun MainScreen(
                 onInstallAll = onInstallAll,
             )
 
-            Tabs(selected = state.tab, onSelect = onTabChange)
+            Tabs(selected = state.tab, onSelect = onTabChange, focusState = focusState)
 
             // Thieu quyen cai: app VAN dung duoc, chi cac nut cai bi vo hieu hoa
             // va hien huong dan ngan (spec section 3).
@@ -385,29 +375,127 @@ private fun Header(onRetryManifest: () -> Unit, usingCached: Boolean) {
     }
 }
 
+/**
+ * Hai tab chinh.
+ *
+ * Tab dang chon duoc to dam bang nen mau chinh + indicator ben duoi, tab dang duoc
+ * remote tro toi co vien trang — de phan biet ro "dang xem" va "dang chon".
+ * Left/Right khi focus dang o vung tab thi doi tab ngay, khong de focus nhay sang
+ * vung khac (spec section 4).
+ */
 @Composable
-private fun Tabs(selected: MainTab, onSelect: (MainTab) -> Unit) {
-    TabRow(selectedTabIndex = selected.ordinal, containerColor = MaterialTheme.colorScheme.background) {
-        Tab(
+private fun Tabs(
+    selected: MainTab,
+    onSelect: (MainTab) -> Unit,
+    focusState: MainFocusState,
+) {
+    val tabOrder = listOf(MainTab.UPDATES, MainTab.INSTALLED)
+
+    fun move(from: MainTab, delta: Int) {
+        val index = tabOrder.indexOf(from).coerceAtLeast(0)
+        val next = (index + delta).coerceIn(0, tabOrder.lastIndex)
+        if (next == index) return
+        val target = tabOrder[next]
+        onSelect(target)
+        focusState.tabRequester(next)?.requestFocus()
+    }
+
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        TabChip(
+            label = stringResource(R.string.tab_updates),
             selected = selected == MainTab.UPDATES,
-            onClick = { onSelect(MainTab.UPDATES) },
-            onFocus = { },
-        ) {
-            Text(
-                text = stringResource(R.string.tab_updates),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold,
-            )
-        }
-        Tab(
+            requester = focusState.updatesTabRequester,
+            onFocus = { focusState.onFocusTab(MainFocusState.TAB_UPDATES) },
+            onLeft = { move(MainTab.UPDATES, -1) },
+            onRight = { move(MainTab.UPDATES, 1) },
+            onClick = {
+                onSelect(MainTab.UPDATES)
+                focusState.updatesTabRequester.requestFocus()
+            },
+        )
+        TabChip(
+            label = stringResource(R.string.tab_installed),
             selected = selected == MainTab.INSTALLED,
-            onClick = { onSelect(MainTab.INSTALLED) },
-            onFocus = { },
-        ) {
+            requester = focusState.installedTabRequester,
+            onFocus = { focusState.onFocusTab(MainFocusState.TAB_INSTALLED) },
+            onLeft = { move(MainTab.INSTALLED, -1) },
+            onRight = { move(MainTab.INSTALLED, 1) },
+            onClick = {
+                onSelect(MainTab.INSTALLED)
+                focusState.installedTabRequester.requestFocus()
+            },
+        )
+    }
+}
+
+@Composable
+private fun TabChip(
+    label: String,
+    selected: Boolean,
+    requester: FocusRequester,
+    onFocus: () -> Unit,
+    onLeft: () -> Unit,
+    onRight: () -> Unit,
+    onClick: () -> Unit,
+) {
+    var focused by remember { mutableStateOf(false) }
+    val shape = RoundedCornerShape(10.dp)
+    val container = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+    val content = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
+
+    Box(
+        modifier = Modifier
+            .clip(shape)
+            .background(container)
+            .then(if (focused) Modifier.border(3.dp, Color.White, shape) else Modifier)
+            .focusRequester(requester)
+            .onFocusChanged { state ->
+                focused = state.isFocused
+                if (state.isFocused) onFocus()
+            }
+            .onPreviewKeyEvent { event ->
+                if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+                when (event.key) {
+                    Key.DirectionLeft -> {
+                        onLeft()
+                        true
+                    }
+
+                    Key.DirectionRight -> {
+                        onRight()
+                        true
+                    }
+
+                    Key.DirectionCenter, Key.Enter, Key.NumPadEnter -> {
+                        onClick()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+            .focusable()
+            .clickable(onClick = onClick)
+            .padding(horizontal = 34.dp, vertical = 14.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = stringResource(R.string.tab_installed),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold,
+                text = label,
+                fontSize = 20.sp,
+                fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                color = content,
+            )
+            Spacer(Modifier.height(6.dp))
+            Box(
+                modifier = Modifier
+                    .width(if (selected) 46.dp else 0.dp)
+                    .height(4.dp)
+                    .clip(RoundedCornerShape(2.dp))
+                    .background(content),
             )
         }
     }

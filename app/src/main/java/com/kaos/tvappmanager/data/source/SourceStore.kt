@@ -48,6 +48,7 @@ class SourceStore(private val dataStore: DataStore<Preferences>) {
     val wifiOnly: Flow<Boolean> = dataStore.data.map { it[KEY_WIFI_ONLY] ?: true }
     val timeoutSeconds: Flow<Int> = dataStore.data.map { it[KEY_TIMEOUT_SECONDS] ?: 60 }
     val autoDeleteApk: Flow<Boolean> = dataStore.data.map { it[KEY_AUTO_DELETE_APK] ?: true }
+    val adbInstallEnabled: Flow<Boolean> = dataStore.data.map { it[KEY_ADB_INSTALL] ?: false }
     val language: Flow<LanguagePreference> = dataStore.data.map {
         LanguagePreference.fromCode(it[KEY_LANGUAGE])
     }
@@ -71,6 +72,7 @@ class SourceStore(private val dataStore: DataStore<Preferences>) {
             wifiOnly = prefs[KEY_WIFI_ONLY] ?: true,
             timeoutSeconds = prefs[KEY_TIMEOUT_SECONDS] ?: 60,
             autoDeleteApk = prefs[KEY_AUTO_DELETE_APK] ?: true,
+            adbInstallEnabled = prefs[KEY_ADB_INSTALL] ?: false,
             language = LanguagePreference.fromCode(prefs[KEY_LANGUAGE]),
             hasSeenFirstRun = prefs[KEY_HAS_SEEN_FIRST_RUN] ?: false,
         )
@@ -131,6 +133,9 @@ class SourceStore(private val dataStore: DataStore<Preferences>) {
     suspend fun setAutoDeleteApk(value: Boolean) =
         dataStore.edit { prefs -> prefs[KEY_AUTO_DELETE_APK] = value }
 
+    suspend fun setAdbInstallEnabled(value: Boolean) =
+        dataStore.edit { prefs -> prefs[KEY_ADB_INSTALL] = value }
+
     suspend fun setLanguage(value: LanguagePreference) =
         dataStore.edit { prefs -> prefs[KEY_LANGUAGE] = value.code }
 
@@ -140,6 +145,7 @@ class SourceStore(private val dataStore: DataStore<Preferences>) {
         val wifiOnly: Boolean,
         val timeoutSeconds: Int,
         val autoDeleteApk: Boolean,
+        val adbInstallEnabled: Boolean = false,
         val language: LanguagePreference,
         val hasSeenFirstRun: Boolean = false,
     )
@@ -159,6 +165,7 @@ class SourceStore(private val dataStore: DataStore<Preferences>) {
         private val KEY_WIFI_ONLY = booleanPreferencesKey("wifi_only")
         private val KEY_TIMEOUT_SECONDS = intPreferencesKey("timeout_seconds")
         private val KEY_AUTO_DELETE_APK = booleanPreferencesKey("auto_delete_apk")
+        private val KEY_ADB_INSTALL = booleanPreferencesKey("adb_install_enabled")
         private val KEY_LANGUAGE = stringPreferencesKey("language")
         private val KEY_HAS_SEEN_FIRST_RUN = booleanPreferencesKey("has_seen_first_run")
 

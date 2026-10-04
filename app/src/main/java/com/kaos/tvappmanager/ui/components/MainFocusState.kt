@@ -30,10 +30,22 @@ class MainFocusState {
 
     val updateAllRequester = FocusRequester()
     val installAllRequester = FocusRequester()
+    val updatesTabRequester = FocusRequester()
+    val installedTabRequester = FocusRequester()
+
+    /** Dang o tab nao: -1 neu focus khong nam tren tab. */
+    var focusedTab by mutableIntStateOf(TAB_NONE)
+        internal set
 
     private val cardRequesters = mutableStateMapOf<String, FocusRequester>()
 
     fun requesterFor(packageName: String): FocusRequester? = cardRequesters[packageName]
+
+    fun tabRequester(index: Int): FocusRequester? = when (index) {
+        TAB_UPDATES -> updatesTabRequester
+        TAB_INSTALLED -> installedTabRequester
+        else -> null
+    }
 
     /** Dang ky/rut the: goi khi the du compose, huy khi bo di. */
     fun register(packageName: String, requester: FocusRequester) {
@@ -54,6 +66,14 @@ class MainFocusState {
         focusedRowIndex = -1
         focusedAction = action
         focusedPackage = null
+        focusedTab = TAB_NONE
+    }
+
+    fun onFocusTab(tab: Int) {
+        focusedRowIndex = -1
+        focusedAction = ACTION_NONE
+        focusedPackage = null
+        focusedTab = tab
     }
 
     fun onFocusLostCard(packageName: String?) {
@@ -64,5 +84,9 @@ class MainFocusState {
         const val ACTION_NONE = -1
         const val ACTION_UPDATE_ALL = 0
         const val ACTION_INSTALL_ALL = 1
+
+        const val TAB_NONE = -1
+        const val TAB_UPDATES = 0
+        const val TAB_INSTALLED = 1
     }
 }

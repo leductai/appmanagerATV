@@ -136,6 +136,12 @@
     <string name="network_clear_cache">Xóa cache</string>
     <string name="network_cleared">Đã xóa cache.</string>
 
+    <!-- ADB install -->
+    <string name="adb_install_title">Cài im lặng qua ADB</string>
+    <string name="adb_install_subtitle">Bật/tắt để cài không cần hộp thoại xác nhận</string>
+    <string name="adb_install_enabled">Đang bật</string>
+    <string name="adb_install_disabled">Đang tắt</string>
+
     <!-- Storage settings -->
     <string name="storage_auto_delete">Tự xóa APK sau khi cài</string>
     <string name="storage_view_tmp">Xem tệp tải tạm</string>

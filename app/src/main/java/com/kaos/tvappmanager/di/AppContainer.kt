@@ -11,6 +11,7 @@ import com.kaos.tvappmanager.data.manifest.ManifestRepository
 import com.kaos.tvappmanager.data.source.SettingsExporter
 import com.kaos.tvappmanager.data.source.SourceStore
 import com.kaos.tvappmanager.platform.download.ApkDownloader
+import com.kaos.tvappmanager.platform.install.AdbLocalClient
 import com.kaos.tvappmanager.platform.install.InstallQueue
 import com.kaos.tvappmanager.platform.install.PackageInstallerRunner
 import com.kaos.tvappmanager.platform.permission.InstallPermission
@@ -54,6 +55,7 @@ class AppContainer(context: Context) {
     val installPermission = InstallPermission(appContext)
     val apkVerifier = ApkVerifier(appContext, logger)
     val installerRunner = PackageInstallerRunner(appContext, logger)
+    val adbLocalClient = AdbLocalClient(logger)
 
     private val downloader = ApkDownloader(
         context = appContext,
@@ -69,6 +71,8 @@ class AppContainer(context: Context) {
         runner = installerRunner,
         permission = installPermission,
         autoDeleteApk = { cachedSettings?.autoDeleteApk ?: true },
+        useAdbInstall = { cachedSettings?.adbInstallEnabled ?: false },
+        adbClient = adbLocalClient,
         logger = logger,
     )
 

@@ -8,7 +8,9 @@ import com.kaos.tvappmanager.core.AppLogger
 import com.kaos.tvappmanager.data.manifest.ManifestParser
 import com.kaos.tvappmanager.platform.PlatformError
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.withContext
+import okhttp3.Call
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
@@ -46,9 +48,17 @@ class ApkDownloader(
         }
 
         var knownLength = -1L
+        logger.log(TAG, "bat dau tai $url")
+        var call: Call? = null
+        val cancellable = currentCoroutineContext()[kotlinx.coroutines.Job]?.invokeOnCompletion {
+            // Huy job (nut "Huy") phai dong luon ket noi mang dang mo, neu khong vong
+            // doc stream se chay tiep cho den het file.
+            call?.cancel()
+        }
         try {
             val request = Request.Builder().url(url).build()
-            client.newCall(request).execute().use { response ->
+            call = client.newCall(request)
+            call.execute().use { response ->
                 if (!response.isSuccessful) {
                     logger.log(TAG, "HTTP ${response.code} khi tai $url")
                     return@withContext DownloadResult(error = PlatformError.NETWORK)
@@ -80,6 +90,7 @@ class ApkDownloader(
                     }
                 }
 
+                logger.log(TAG, "tai xong $read bytes tu $url")
                 if (knownLength > 0 && read != knownLength) {
                     logger.log(TAG, "thieu byte: $read/$knownLength")
                     target.delete()
@@ -87,6 +98,10 @@ class ApkDownloader(
                 }
                 return@withContext DownloadResult(file = target)
             }
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            logger.log(TAG, "da huy tai $url")
+            target.delete()
+            throw e
         } catch (e: IOException) {
             logger.log(TAG, "loi mang khi tai $url", e)
             target.delete()

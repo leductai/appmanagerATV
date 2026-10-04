@@ -45,6 +45,7 @@ fun HiddenSettingsScreen(
     wifiOnly: Boolean,
     timeoutSeconds: Int,
     autoDeleteApk: Boolean,
+    adbInstallEnabled: Boolean,
     language: LanguagePreference,
     logLines: List<String>,
     cacheBytes: Long,
@@ -53,6 +54,7 @@ fun HiddenSettingsScreen(
     onWifiOnlyChange: (Boolean) -> Unit,
     onTimeoutChange: (Int) -> Unit,
     onAutoDeleteChange: (Boolean) -> Unit,
+    onAdbInstallChange: (Boolean) -> Unit,
     onLanguageChange: (LanguagePreference) -> Unit,
     onOpenSources: () -> Unit,
     onImportManifest: () -> Unit,
@@ -147,6 +149,17 @@ fun HiddenSettingsScreen(
                     subtitle = "",
                     checked = autoDeleteApk,
                     onChange = onAutoDeleteChange,
+                )
+            }
+            item {
+                SettingsSwitch(
+                    title = stringResource(R.string.adb_install_title),
+                    subtitle = stringResource(
+                        if (adbInstallEnabled) R.string.adb_install_enabled
+                        else R.string.adb_install_disabled,
+                    ) + " — " + stringResource(R.string.adb_install_subtitle),
+                    checked = adbInstallEnabled,
+                    onChange = onAdbInstallChange,
                 )
             }
             item {

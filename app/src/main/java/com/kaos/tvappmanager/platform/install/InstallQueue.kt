@@ -64,6 +64,8 @@ class InstallQueue(
     private val runner: PackageInstallerRunner,
     private val permission: InstallPermission,
     private val autoDeleteApk: () -> Boolean,
+    private val useAdbInstall: () -> Boolean = { false },
+    private val adbClient: AdbLocalClient? = null,
     private val logger: AppLogger,
 ) {
     private val _state = MutableStateFlow(QueueState())
@@ -80,6 +82,7 @@ class InstallQueue(
         if (apps.isEmpty()) return
         if (_state.value.running) return
         job?.cancel()
+        logger.log(TAG, "bat dau hang doi ${apps.size} ung dung: ${apps.joinToString { it.packageName }}")
         _state.value = QueueState(
             items = apps.map { QueueItemState(it) },
             running = true,
@@ -88,7 +91,24 @@ class InstallQueue(
     }
 
     fun cancel() {
-        _state.value = _state.value.copy(cancelRequested = true)
+        if (!_state.value.running) return
+        _state.value = _state.value.copy(
+            cancelRequested = true,
+            running = false,
+            finished = true,
+            items = _state.value.items.map {
+                if (!it.isTerminal) it.copy(state = QueueItemState.State.CANCELLED)
+                else it
+            },
+        )
+        logger.log(TAG, "yeu cau huy hang doi")
+        job?.cancel()
+        job = null
+        scope.launch(Dispatchers.IO) {
+            runner.tempApkDir().listFiles()?.forEach { file ->
+                runCatching { file.delete() }
+            }
+        }
     }
 
     fun reset() {
@@ -108,8 +128,12 @@ class InstallQueue(
 
     private suspend fun run(apps: List<ManifestApp>) {
         for (app in apps) {
-            if (_state.value.cancelRequested) break
+            if (_state.value.cancelRequested) {
+                logger.log(TAG, "da huy - dung xu ly ${app.packageName}")
+                break
+            }
 
+            logger.log(TAG, "bat dau tai ${app.packageName} ${app.version}")
             updateItem(app.packageName) { it.copy(state = QueueItemState.State.DOWNLOADING, progressPercent = 0) }
 
             if (!permission.has()) {
@@ -139,9 +163,14 @@ class InstallQueue(
 
             val file = download.file
             if (file == null) {
-                fail(app.packageName, download.error ?: PlatformError.NETWORK)
+                if (_state.value.cancelRequested) {
+                    cancelItem(app.packageName)
+                } else {
+                    fail(app.packageName, download.error ?: PlatformError.NETWORK)
+                }
                 continue
             }
+            logger.log(TAG, "tai xong ${app.packageName} (${file.length()} bytes)")
 
             updateItem(app.packageName) {
                 it.copy(state = QueueItemState.State.VERIFYING, progressPercent = 100)
@@ -160,6 +189,21 @@ class InstallQueue(
             if (_state.value.cancelRequested) {
                 cleanup(app.packageName)
                 cancelItem(app.packageName)
+                continue
+            }
+
+            if (useAdbInstall() && adbClient != null) {
+                updateItem(app.packageName) { it.copy(state = QueueItemState.State.INSTALLING) }
+                logger.log(TAG, "thu cai im lang qua ADB cho ${app.packageName}")
+                val adbError = adbClient.install(file, app.packageName)
+                cleanup(app.packageName)
+                if (adbError == null) {
+                    updateItem(app.packageName) { it.copy(state = QueueItemState.State.SUCCESS) }
+                    onInstalled?.invoke(app.packageName)
+                } else {
+                    logger.log(TAG, "ADB that bai: $adbError")
+                    fail(app.packageName, PlatformError.UNKNOWN)
+                }
                 continue
             }
 

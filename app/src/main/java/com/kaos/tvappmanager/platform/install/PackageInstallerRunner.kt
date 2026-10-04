@@ -42,13 +42,16 @@ class PackageInstallerRunner(
 
         var sessionId: Int = -1
         try {
+            logger.log(TAG, "tao session cho ${app.packageName}, size=${apk.length()}")
             sessionId = installer.createSession(params)
+            logger.log(TAG, "da tao session $sessionId cho ${app.packageName}")
             installer.openSession(sessionId).use { session ->
                 val output = session.openWrite("base.apk", 0, apk.length())
                 output.use { stream ->
                     apk.inputStream().use { input -> input.copyTo(stream) }
                     session.fsync(stream)
                 }
+                logger.log(TAG, "ghi APK vao session $sessionId cho ${app.packageName}")
                 session.commit(intentSender(sessionId, app.packageName).intentSender)
             }
             logger.log(TAG, "da commit session $sessionId cho ${app.packageName}")

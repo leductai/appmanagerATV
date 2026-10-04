@@ -29,15 +29,6 @@
       "versionMode": "semver"
     },
     {
-      "name": "VLC",
-      "package": "org.videolan.vlc",
-      "version": "3.7.1",
-      "apkUrl": "https://f-droid.org/repo/org.videolan.vlc_13070108.apk",
-      "iconUrl": "https://f-droid.org/repo/org.videolan.vlc/en-US/icon.png",
-      "sha256": "4a9144fadfd8606cc5c0e9db892fd24846b7b2efeb1630db5377955d1612b119",
-      "versionMode": "semver"
-    },
-    {
       "name": "Fingerlist",
       "package": "de.sirjofri.fingerlist",
       "version": "1.1.0",

@@ -124,6 +124,12 @@
     <string name="network_clear_cache">Clear cache</string>
     <string name="network_cleared">Cache cleared.</string>
 
+    <!-- ADB install -->
+    <string name="adb_install_title">Silent install via ADB</string>
+    <string name="adb_install_subtitle">Toggle to install without confirmation dialog</string>
+    <string name="adb_install_enabled">Enabled</string>
+    <string name="adb_install_disabled">Disabled</string>
+
     <string name="storage_auto_delete">Delete APKs after install</string>
     <string name="storage_view_tmp">View temporary files</string>
     <string name="storage_clean_tmp">Clean temporary files</string>

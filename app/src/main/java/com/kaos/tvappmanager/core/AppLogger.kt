@@ -1,5 +1,6 @@
 package com.kaos.tvappmanager.core
 
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.ArrayDeque
 import java.util.Date
@@ -10,6 +11,8 @@ class AppLogger {
 
     @Synchronized
     fun log(tag: String, message: String, throwable: Throwable? = null) {
+        if (throwable != null) Log.w("TvAppMgr:$tag", message, throwable)
+        else Log.i("TvAppMgr:$tag", message)
         val stamp = SimpleDateFormat("MM-dd HH:mm:ss", Locale.US).format(Date())
         val body = buildString {
             append(stamp).append("  ").append(tag).append(": ").append(message)

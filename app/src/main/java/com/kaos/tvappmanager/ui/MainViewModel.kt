@@ -246,6 +246,9 @@ class MainViewModel(private val container: AppContainer) : ViewModel() {
         if (entries.isEmpty()) return
         closeSelection()
         container.installQueue.start(entries)
+        // Bat buoc mo man hinh tien do ngay: neu khong nguoi dung khong thay gi xay ra
+        // va tuong app khong tai/cai.
+        navigate(Screen.PROGRESS)
     }
 
     fun cancelQueue() = container.installQueue.cancel()
@@ -312,6 +315,14 @@ class MainViewModel(private val container: AppContainer) : ViewModel() {
     fun setAutoDeleteApk(value: Boolean) {
         viewModelScope.launch {
             container.sourceStore.setAutoDeleteApk(value)
+            container.refreshSettings()
+            _ui.value = _ui.value.copy(settings = container.sourceStore.snapshot())
+        }
+    }
+
+    fun setAdbInstallEnabled(value: Boolean) {
+        viewModelScope.launch {
+            container.sourceStore.setAdbInstallEnabled(value)
             container.refreshSettings()
             _ui.value = _ui.value.copy(settings = container.sourceStore.snapshot())
         }
