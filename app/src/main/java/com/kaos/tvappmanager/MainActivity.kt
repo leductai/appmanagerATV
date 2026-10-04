@@ -1,6 +1,7 @@
 package com.kaos.tvappmanager
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.KeyEvent
@@ -110,6 +111,15 @@ class MainActivity : ComponentActivity() {
         return true
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // Sau khi man hinh go cai dat cua he thong dong lai (du go hay huy),
+        // doc lai danh sach de trang thai the va tab "Da cai dat" dung ngay.
+        if (requestCode == SystemIntents.REQUEST_CODE_UNINSTALL) {
+            viewModel.refreshInstalled()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -119,8 +129,8 @@ class MainActivity : ComponentActivity() {
                     viewModel = viewModel,
                     onOpenInstallPermission = { container.installPermission.openSystemSettings(this) },
                     onOpenApp = { SystemIntents.openApp(this, it) },
-                    onUninstall = { SystemIntents.uninstall(this, it) },
-                    onAppInfo = { SystemIntents.appInfo(this, it) },
+                    onUninstall = { SystemIntents.uninstall(this, it, container.logger) },
+                    onAppInfo = { SystemIntents.appInfo(this, it, container.logger) },
                     onExit = { finish() },
                     onKeepScreenOn = { keep -> setKeepScreenOn(keep) },
                 )
