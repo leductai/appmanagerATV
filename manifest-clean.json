@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "apps": [
+    {
+      "name": "NewPipe",
+      "package": "org.schabi.newpipe",
+      "version": "0.29.1",
+      "apkUrl": "https://f-droid.org/repo/org.schabi.newpipe_1015.apk",
+      "iconUrl": "https://f-droid.org/repo/org.schabi.newpipe/en-US/icon.png",
+      "sha256": "1d66d19eedbab969b1be2e44e0ea35f5f8921cbe83b5c5ac810767ca1a84b7e8",
+      "versionMode": "semver"
+    },
+    {
+      "name": "F-Droid",
+      "package": "org.fdroid.fdroid",
+      "version": "2.0.1",
+      "apkUrl": "https://f-droid.org/repo/org.fdroid.fdroid_2000051.apk",
+      "iconUrl": "https://f-droid.org/repo/org.fdroid.fdroid/en-US/icon.png",
+      "sha256": "83d3fe522281c3cb89fce3bc05038f81b3c3b32c108536941f184c5f9bb53778",
+      "versionMode": "semver"
+    },
+    {
+      "name": "Giggity",
+      "package": "net.gaast.giggity",
+      "version": "3.0.1",
+      "apkUrl": "https://f-droid.org/repo/net.gaast.giggity_769.apk",
+      "iconUrl": "https://f-droid.org/repo/net.gaast.giggity/en-US/icon.png",
+      "sha256": "46066e1bbd1b1cd8bda910d862e2145f3f83b0366523c4ebe36c7a1f0881eeec",
+      "versionMode": "semver"
+    },
+    {
+      "name": "VLC",
+      "package": "org.videolan.vlc",
+      "version": "3.7.1",
+      "apkUrl": "https://f-droid.org/repo/org.videolan.vlc_13070108.apk",
+      "iconUrl": "https://f-droid.org/repo/org.videolan.vlc/en-US/icon.png",
+      "sha256": "4a9144fadfd8606cc5c0e9db892fd24846b7b2efeb1630db5377955d1612b119",
+      "versionMode": "semver"
+    },
+    {
+      "name": "Fingerlist",
+      "package": "de.sirjofri.fingerlist",
+      "version": "1.1.0",
+      "apkUrl": "https://f-droid.org/repo/de.sirjofri.fingerlist_101000.apk",
+      "iconUrl": "https://f-droid.org/repo/icons/de.sirjofri.fingerlist.101000.png",
+      "sha256": "41ab84f608996e128069bfe9e4ac5fe5f11aeb188f292a8c6874af502d752634",
+      "versionMode": "semver"
+    }
+  ]
+}

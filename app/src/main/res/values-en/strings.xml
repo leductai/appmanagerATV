@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TV App Manager</string>
+
+    <string name="action_update_all">Update all (%1$d)</string>
+    <string name="action_install_all">Install all (%1$d)</string>
+    <string name="action_progress">Working (%1$d/%2$d)</string>
+
+    <string name="tab_updates">Updates</string>
+    <string name="tab_installed">Installed</string>
+
+    <string name="group_has_update">Updates available</string>
+    <string name="group_up_to_date">Up to date</string>
+    <string name="group_not_installed">Not installed</string>
+    <string name="group_unknown">Unknown</string>
+
+    <string name="badge_has_new">New version</string>
+    <string name="badge_up_to_date">Up to date</string>
+    <string name="badge_not_installed">Not installed</string>
+    <string name="badge_unknown">Unknown</string>
+    <string name="badge_installed_only">Not in manifest</string>
+
+    <string name="detail_version_device">Version on device</string>
+    <string name="detail_version_manifest">Version in manifest</string>
+    <string name="detail_package">Package name</string>
+    <string name="detail_apk_size">APK size</string>
+    <string name="detail_apk_url">Download link</string>
+    <string name="detail_installed_version">Installed version</string>
+    <string name="detail_not_installed">Not installed on this device</string>
+    <string name="btn_install">Install</string>
+    <string name="btn_update">Update</string>
+    <string name="btn_open">Open</string>
+    <string name="btn_uninstall">Uninstall</string>
+    <string name="btn_app_info">App info</string>
+    <string name="btn_details">Details</string>
+
+    <string name="queue_confirm_update_title">Update %1$d apps?</string>
+    <string name="queue_confirm_install_title">Install %1$d apps?</string>
+    <string name="queue_confirm_notice">Android TV will ask you to confirm each app installation.</string>
+    <string name="queue_start">START</string>
+    <string name="queue_cancel">CANCEL</string>
+    <string name="queue_none_selected">No apps selected.</string>
+    <string name="queue_state_downloading">Downloading (%1$d%%)</string>
+    <string name="queue_state_verifying">Verifying APK</string>
+    <string name="queue_state_awaiting">Waiting for system confirmation</string>
+    <string name="queue_state_installing">Installing</string>
+    <string name="queue_result_title">Queue finished</string>
+    <string name="queue_result_success">Success</string>
+    <string name="queue_result_failed">Failed</string>
+    <string name="queue_result_skipped">Skipped</string>
+    <string name="queue_retry_failed">Retry failed</string>
+    <string name="queue_close">Close</string>
+    <string name="queue_error_checksum">SHA-256 mismatch, file rejected.</string>
+    <string name="queue_error_package">Package name in APK does not match the manifest.</string>
+    <string name="queue_error_version">APK version does not match the manifest or is older.</string>
+    <string name="queue_error_network">Could not download the APK.</string>
+    <string name="queue_error_verify_apk">Could not read APK info.</string>
+    <string name="queue_error_storage">Not enough free space to download.</string>
+    <string name="queue_error_signature">Signature does not match the installed version. Try uninstalling the old build first.</string>
+    <string name="queue_error_permission">Missing permission to install apps from unknown sources.</string>
+    <string name="queue_error_user_cancelled">You cancelled the system install dialog.</string>
+    <string name="queue_error_generic">Unknown error.</string>
+    <string name="queue_download_failed">Download failed</string>
+    <string name="queue_retry">Retry</string>
+    <string name="queue_stop">Stop</string>
+
+    <string name="permission_title">Install permission required</string>
+    <string name="permission_body">TV App Manager needs permission to install apps in order to install and update APKs. Android Settings will open next.</string>
+    <string name="permission_allow">Allow</string>
+    <string name="permission_grant_later">Not now</string>
+    <string name="permission_missing_title">Install permission missing</string>
+    <string name="permission_missing_body">Install and update buttons are disabled. Press the button below to open Settings and allow installs from this source.</string>
+    <string name="permission_open_settings">Open permission settings</string>
+    <string name="permission_already_granted">Install permission is already granted.</string>
+
+    <string name="manifest_none_title">No manifest source yet</string>
+    <string name="manifest_none_body">Press the number keys 8-8-0-0 within 4 seconds on the main screen to open the hidden settings menu and add a manifest source.</string>
+    <string name="manifest_loading">Reading manifest…</string>
+    <string name="manifest_cached">Could not refresh the manifest, showing the cached copy.</string>
+    <string name="manifest_empty">The manifest contains no apps.</string>
+    <string name="manifest_error">Failed to read manifest</string>
+    <string name="manifest_refetch">Reload</string>
+
+    <string name="state_updates_empty">No updates available. Everything is up to date.</string>
+    <string name="state_installed_empty">No data yet.</string>
+    <string name="btn_back">Back</string>
+    <string name="enabled">On</string>
+    <string name="disabled">Off</string>
+    <string name="btn_close">Close</string>
+    <string name="exit_confirm_title">Exit TV App Manager?</string>
+    <string name="exit_confirm_yes">Exit</string>
+    <string name="exit_confirm_no">Stay</string>
+    <string name="close">Close</string>
+    <string name="select_all">Select all</string>
+    <string name="deselect_all">Deselect all</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_sources">Manifest sources</string>
+    <string name="settings_import">Import manifest from file</string>
+    <string name="settings_export">Export configuration</string>
+    <string name="settings_permission">Install permission</string>
+    <string name="settings_network">Network</string>
+    <string name="settings_storage">Storage</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_diagnostics">Diagnostics</string>
+    <string name="settings_about">About</string>
+
+    <string name="sources_active">Active source</string>
+    <string name="sources_add">Add source</string>
+    <string name="sources_edit">Edit source</string>
+    <string name="sources_delete">Delete source</string>
+    <string name="sources_select">Select active source</string>
+    <string name="sources_last_sync">Last refreshed</string>
+    <string name="sources_last_error">Last error</string>
+    <string name="source_name_label">Display name</string>
+    <string name="source_url_label">HTTPS URL or local file</string>
+    <string name="source_url_invalid">Only https:// URLs or file/content URIs are accepted.</string>
+    <string name="source_saved">Saved.</string>
+    <string name="source_deleted">Deleted.</string>
+    <string name="sources_empty">No sources yet.</string>
+
+    <string name="network_wifi_only">Download over Wi-Fi/Ethernet only</string>
+    <string name="network_timeout">Download timeout (seconds)</string>
+    <string name="network_clear_cache">Clear cache</string>
+    <string name="network_cleared">Cache cleared.</string>
+
+    <string name="storage_auto_delete">Delete APKs after install</string>
+    <string name="storage_view_tmp">View temporary files</string>
+    <string name="storage_clean_tmp">Clean temporary files</string>
+    <string name="storage_no_tmp">No temporary files.</string>
+    <string name="storage_removed">Removed %1$d files, freed %2$s.</string>
+
+    <string name="language_label">Language</string>
+    <string name="language_system">System</string>
+    <string name="language_vi">Tiếng Việt</string>
+    <string name="language_en">English</string>
+
+    <string name="diagnostics_view">View error log</string>
+    <string name="diagnostics_export">Export log</string>
+    <string name="diagnostics_clear">Clear log</string>
+    <string name="diagnostics_empty">No log entries.</string>
+    <string name="diagnostics_exported">Log written to Downloads.</string>
+    <string name="diagnostics_cleared">Log cleared.</string>
+
+    <string name="about_version">Version %1$s</string>
+    <string name="about_body">TV App Manager — personal APK management and deployment on Android TV.</string>
+
+    <string name="exported_config">Configuration written to Downloads.</string>
+
+    <string name="cd_app_icon">%1$s icon</string>
+    <string name="cd_default_icon">Default icon</string>
+    <string name="cd_app_card">%1$s app card</string>
+</resources>

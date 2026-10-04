@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TV App Manager</string>
+
+    <!-- Action row -->
+    <string name="action_update_all">Cập nhật tất cả (%1$d)</string>
+    <string name="action_install_all">Cài tất cả (%1$d)</string>
+    <string name="action_progress">Đang xử lý (%1$d/%2$d)</string>
+
+    <!-- Tabs -->
+    <string name="tab_updates">Cập nhật</string>
+    <string name="tab_installed">Đã cài đặt</string>
+
+    <!-- Groups -->
+    <string name="group_has_update">Có bản cập nhật</string>
+    <string name="group_up_to_date">Đã mới nhất</string>
+    <string name="group_not_installed">Chưa cài đặt</string>
+    <string name="group_unknown">Không xác định</string>
+
+    <!-- Status badges (text, never colour-only) -->
+    <string name="badge_has_new">Có bản mới</string>
+    <string name="badge_up_to_date">Đã mới nhất</string>
+    <string name="badge_not_installed">Chưa cài</string>
+    <string name="badge_unknown">Không xác định</string>
+    <string name="badge_installed_only">Không có trong manifest</string>
+
+    <!-- Detail -->
+    <string name="detail_version_device">Version trên máy</string>
+    <string name="detail_version_manifest">Version trong manifest</string>
+    <string name="detail_package">Package name</string>
+    <string name="detail_apk_size">Dung lượng APK</string>
+    <string name="detail_apk_url">Link tải</string>
+    <string name="detail_installed_version">Version đã cài</string>
+    <string name="detail_not_installed">Chưa cài trên thiết bị này</string>
+    <string name="btn_install">Cài đặt</string>
+    <string name="btn_update">Cập nhật</string>
+    <string name="btn_open">Mở</string>
+    <string name="btn_uninstall">Gỡ cài đặt</string>
+    <string name="btn_app_info">Thông tin ứng dụng</string>
+    <string name="btn_details">Chi tiết</string>
+
+    <!-- Queue -->
+    <string name="queue_confirm_update_title">Cập nhật %1$d ứng dụng?</string>
+    <string name="queue_confirm_install_title">Cài đặt %1$d ứng dụng?</string>
+    <string name="queue_confirm_notice">Android TV sẽ hỏi xác nhận cài đặt từng ứng dụng.</string>
+    <string name="queue_start">BẮT ĐẦU</string>
+    <string name="queue_cancel">HỦY</string>
+    <string name="queue_none_selected">Chưa chọn ứng dụng nào để thực hiện.</string>
+    <string name="queue_state_downloading">Đang tải xuống (%1$d%%)</string>
+    <string name="queue_state_verifying">Đang kiểm tra tệp APK</string>
+    <string name="queue_state_awaiting">Đang chờ bạn xác nhận trên hệ thống</string>
+    <string name="queue_state_installing">Đang cài đặt</string>
+    <string name="queue_result_title">Hoàn tất hàng đợi</string>
+    <string name="queue_result_success">Thành công</string>
+    <string name="queue_result_failed">Lỗi</string>
+    <string name="queue_result_skipped">Bỏ qua</string>
+    <string name="queue_retry_failed">Thử lại lỗi</string>
+    <string name="queue_close">Đóng</string>
+    <string name="queue_error_checksum">SHA-256 không khớp, tệp bị từ chối.</string>
+    <string name="queue_error_package">Package name trong APK không khớp manifest.</string>
+    <string name="queue_error_version">Version trong APK không khớp hoặc nhỏ hơn manifest.</string>
+    <string name="queue_error_network">Không tải được tệp APK.</string>
+    <string name="queue_error_verify_apk">Không đọc được thông tin APK.</string>
+    <string name="queue_error_storage">Không đủ dung lượng trống để tải.</string>
+    <string name="queue_error_signature">Chữ ký bản mới không khớp bản đang cài. Hãy thử gỡ bản cũ rồi cài lại.</string>
+    <string name="queue_error_permission">Thiếu quyền cài ứng dụng từ nguồn không xác định.</string>
+    <string name="queue_error_user_cancelled">Bạn đã hủy cài đặt trên hệ thống.</string>
+    <string name="queue_error_generic">Lỗi không xác định.</string>
+    <string name="queue_download_failed">Tải xuống thất bại</string>
+    <string name="queue_retry">Thử lại</string>
+    <string name="queue_stop">Dừng</string>
+
+    <!-- First run / permission -->
+    <string name="permission_title">Cần quyền cài ứng dụng</string>
+    <string name="permission_body">TV App Manager cần quyền cài đặt ứng dụng để cài và cập nhật APK. Bạn sẽ được chuyển tới màn hình Cài đặt Android.</string>
+    <string name="permission_allow">Cho phép</string>
+    <string name="permission_grant_later">Cấp quyền sau</string>
+    <string name="permission_missing_title">Chưa có quyền cài ứng dụng</string>
+    <string name="permission_missing_body">Các nút cài và cập nhật đang bị vô hiệu. Bấm nút bên dưới để mở Cài đặt và bật cho phép từ nguồn này.</string>
+    <string name="permission_open_settings">Mở cài đặt quyền</string>
+    <string name="permission_already_granted">Quyền cài ứng dụng đã được cấp.</string>
+
+    <!-- Manifest / source -->
+    <string name="manifest_none_title">Chưa có nguồn manifest</string>
+    <string name="manifest_none_body">Nhấn giữ phím số 8-8-0-0 trong vòng 4 giây tại màn hình chính để mở menu cài đặt ẩn và thêm nguồn manifest.</string>
+    <string name="manifest_loading">Đang đọc manifest…</string>
+    <string name="manifest_cached">Không tải được manifest, đang hiển thị bản lưu.</string>
+    <string name="manifest_empty">Manifest không có ứng dụng nào.</string>
+    <string name="manifest_error">Lỗi đọc manifest</string>
+    <string name="manifest_refetch">Tải lại</string>
+
+    <!-- Empty / misc -->
+    <string name="state_updates_empty">Không có bản cập nhật nào. Mọi ứng dụng đã mới nhất.</string>
+    <string name="state_installed_empty">Chưa có dữ liệu.</string>
+    <string name="btn_back">Quay lại</string>
+    <string name="enabled">Đang bật</string>
+    <string name="disabled">Đang tắt</string>
+    <string name="btn_close">Đóng</string>
+    <string name="exit_confirm_title">Thoát TV App Manager?</string>
+    <string name="exit_confirm_yes">Thoát</string>
+    <string name="exit_confirm_no">Ở lại</string>
+    <string name="close">Đóng</string>
+    <string name="select_all">Chọn tất cả</string>
+    <string name="deselect_all">Bỏ chọn tất cả</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_sources">Nguồn manifest</string>
+    <string name="settings_import">Nhập manifest từ file</string>
+    <string name="settings_export">Xuất cấu hình</string>
+    <string name="settings_permission">Quyền cài ứng dụng</string>
+    <string name="settings_network">Mạng</string>
+    <string name="settings_storage">Lưu trữ</string>
+    <string name="settings_language">Ngôn ngữ</string>
+    <string name="settings_diagnostics">Chẩn đoán</string>
+    <string name="settings_about">Giới thiệu</string>
+
+    <!-- Sources -->
+    <string name="sources_active">Đang hoạt động</string>
+    <string name="sources_add">Thêm nguồn</string>
+    <string name="sources_edit">Sửa nguồn</string>
+    <string name="sources_delete">Xóa nguồn</string>
+    <string name="sources_select">Chọn nguồn đang hoạt động</string>
+    <string name="sources_last_sync">Lần làm mới gần nhất</string>
+    <string name="sources_last_error">Lỗi gần nhất</string>
+    <string name="source_name_label">Tên hiển thị</string>
+    <string name="source_url_label">URL HTTPS hoặc file local</string>
+    <string name="source_url_invalid">Chỉ chấp nhận URL https:// hoặc URI file/content.</string>
+    <string name="source_saved">Đã lưu.</string>
+    <string name="source_deleted">Đã xóa.</string>
+    <string name="sources_empty">Chưa có nguồn nào.</string>
+
+    <!-- Network settings -->
+    <string name="network_wifi_only">Chỉ tải qua Wi-Fi/Ethernet</string>
+    <string name="network_timeout">Thời gian chờ tải (giây)</string>
+    <string name="network_clear_cache">Xóa cache</string>
+    <string name="network_cleared">Đã xóa cache.</string>
+
+    <!-- Storage settings -->
+    <string name="storage_auto_delete">Tự xóa APK sau khi cài</string>
+    <string name="storage_view_tmp">Xem tệp tải tạm</string>
+    <string name="storage_clean_tmp">Dọn tệp tải tạm</string>
+    <string name="storage_no_tmp">Không có tệp tải tạm nào.</string>
+    <string name="storage_removed">Đã dọn %1$d tệp, giải phóng %2$s.</string>
+
+    <!-- Language -->
+    <string name="language_label">Ngôn ngữ</string>
+    <string name="language_system">Hệ thống</string>
+    <string name="language_vi">Tiếng Việt</string>
+    <string name="language_en">English</string>
+
+    <!-- Diagnostics -->
+    <string name="diagnostics_view">Xem log lỗi</string>
+    <string name="diagnostics_export">Xuất log</string>
+    <string name="diagnostics_clear">Xóa log</string>
+    <string name="diagnostics_empty">Không có log nào.</string>
+    <string name="diagnostics_exported">Đã ghi log ra thư mục Downloads.</string>
+    <string name="diagnostics_cleared">Đã xóa log.</string>
+
+    <!-- About -->
+    <string name="about_version">Phiên bản %1$s</string>
+    <string name="about_body">TV App Manager — quản lý và triển khai APK cá nhân trên Android TV.</string>
+
+    <!-- Export -->
+    <string name="exported_config">Đã xuất cấu hình ra Downloads.</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_app_icon">Icon ứng dụng %1$s</string>
+    <string name="cd_default_icon">Icon mặc định</string>
+    <string name="cd_app_card">Thẻ ứng dụng %1$s</string>
+</resources>
